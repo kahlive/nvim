@@ -1,3 +1,4 @@
+-- 検索機能を強化するプラグイン
 local M = {
 	"kevinhwang91/nvim-hlslens",
 	event = "VeryLazy",

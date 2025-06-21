@@ -1,7 +1,7 @@
 return {
 	settings = {
 		["rust-analyzer"] = {
-			checkOnSave = {
+			check = {
 				command = "clippy",
 			},
 			cargo = {
@@ -14,7 +14,7 @@ return {
 				},
 				chainingHints = {
 					-- Whether to show inlay type hints for method chains.
-					enable = true,
+					enable = false,
 				},
 				closingBraceHints = {
 					-- Whether to show inlay hints after a closing } to indicate what item it belongs to.

@@ -23,7 +23,7 @@ M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
 
 	if client.supports_method("textDocument/inlayHint") then
-		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
 	end
 end
 
@@ -52,10 +52,14 @@ function M.config()
 		{ "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", desc = "CodeLens Action" },
 		{ "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Quickfix" },
 		{ "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename" },
-		{ "<leader>laa", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action", mode = "v" },
+		{
+			"<leader>laa",
+			"<cmd>lua vim.lsp.buf.code_action()<cr>",
+			desc = "Code Action",
+			mode = "v",
+		},
 	})
 
-	local lspconfig = require("lspconfig")
 	local icons = require("user.icons")
 
 	local servers = {
@@ -109,9 +113,17 @@ function M.config()
 		end
 	end
 
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-	vim.lsp.handlers["textDocument/signatureHelp"] =
-		vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+	local border = "rounded"
+
+	-- 元の関数を退避
+	local orig_open_floating_preview = vim.lsp.util.open_floating_preview
+
+	---@diagnostic disable-next-line: duplicate-set-field
+	vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+		opts = opts or {}
+		opts.border = opts.border or border
+		return orig_open_floating_preview(contents, syntax, opts, ...)
+	end
 	require("lspconfig.ui.windows").default_options.border = "rounded"
 
 	for _, server in pairs(servers) do
@@ -129,24 +141,8 @@ function M.config()
 			require("neodev").setup({})
 		end
 
-		lspconfig[server].setup(opts)
+		vim.lsp.config(server, opts)
 	end
-
-	-- ts_ls
-	local function patch(result)
-		if not vim.islist(result) or type(result) ~= "table" then
-			return result
-		end
-
-		return { result[1] }
-	end
-	lspconfig.ts_ls.setup({
-		handlers = {
-			["textDocument/definition"] = function(err, result, method, ...)
-				vim.lsp.handlers["textDocument/definition"](err, patch(result), method, ...)
-			end,
-		},
-	})
 end
 
 return M

@@ -1,3 +1,4 @@
+-- 現在カーソルがある単語と同じ単語を自動でハイライトしてくれるプラグイン
 local M = {
 	"RRethy/vim-illuminate",
 	event = "VeryLazy",

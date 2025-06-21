@@ -1,3 +1,4 @@
+-- nvim起動時に表示できるカスタムダッシュボードを作成できるプラグイン
 local M = {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
