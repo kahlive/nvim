@@ -1,3 +1,4 @@
+-- ペア記号を自動で補完するプラグイン
 local M = {
 	"windwp/nvim-autopairs",
 }

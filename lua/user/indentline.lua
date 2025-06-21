@@ -1,3 +1,4 @@
+-- インデントガイドを表示するためのプラグイン
 local M = {
 	"lukas-reineke/indent-blankline.nvim",
 	event = "VeryLazy",

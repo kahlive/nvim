@@ -1,3 +1,4 @@
+-- オールインワンプロジェクト管理プラグイン
 local M = {
 	"ahmedkhalf/project.nvim",
 	event = "VeryLazy",

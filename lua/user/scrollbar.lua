@@ -1,3 +1,4 @@
+-- 視覚的なスクロールバー(縦スクロールインジケータ)を表示するプラグイン
 local M = {
 	"petertriho/nvim-scrollbar",
 	event = "VeryLazy",

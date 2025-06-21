@@ -1,3 +1,4 @@
+-- 補完プラグイン‥LSP，スニペット，バッファ，ファイルパスなどさまざまなソースからの補完候補を統合的に扱える．
 local M = {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",

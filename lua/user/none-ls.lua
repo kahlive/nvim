@@ -37,15 +37,24 @@ function M.config()
 				end, { buffer = bufnr, desc = "[lsp] format" })
 
 				-- format on save
-				vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-				vim.api.nvim_create_autocmd(event, {
-					buffer = bufnr,
-					group = group,
-					callback = function()
-						vim.lsp.buf.format({ bufnr = bufnr, async = async })
-					end,
-					desc = "[lsp] format on save",
-				})
+				local ft = vim.bo[bufnr].filetype
+				if
+					ft ~= "typescript"
+					and ft ~= "typescriptreact"
+					and ft ~= "python"
+					and ft ~= "json"
+					and ft ~= "yaml"
+				then
+					vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+					vim.api.nvim_create_autocmd(event, {
+						buffer = bufnr,
+						group = group,
+						callback = function()
+							vim.lsp.buf.format({ bufnr = bufnr, async = async })
+						end,
+						desc = "[lsp] format on save",
+					})
+				end
 			end
 
 			if client.supports_method("textDocument/rangeFormatting") then
