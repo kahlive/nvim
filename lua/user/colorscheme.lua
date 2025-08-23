@@ -94,6 +94,16 @@ function M.config()
 	vim.cmd([[highlight @constructor guifg=#0F76CC gui=nocombine]])
 	-- ボーダー
 	vim.cmd([[highlight vertsplit guifg=fg guibg=bg]])
+	-- 背景透過のための設定（透過させたいグループの背景を NONE に）
+	vim.cmd([[
+    highlight Normal guibg=NONE ctermbg=NONE
+    highlight NormalNC guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    highlight SignColumn guibg=NONE ctermbg=NONE
+    highlight VertSplit guibg=NONE ctermbg=NONE
+    highlight LineNr guibg=NONE ctermbg=NONE
+    highlight CursorLine guibg=NONE ctermbg=NONE
+  ]])
 end
 
 return M
