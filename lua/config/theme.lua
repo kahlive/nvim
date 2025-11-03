@@ -145,7 +145,7 @@ function M.setup(opts)
   H("@keyword.conditional", { fg = P.moss })
   H("@keyword.exception", { fg = P.moss })
   H("@keyword.repeat", { fg = P.moss })
-  H("@keyword.import", { fg = P.amber })
+  H("@keyword.import", { fg = P.magenta })
   H("@keyword.directive", { fg = P.amber })
   H("@keyword.directive.define", { fg = P.amber })
 
