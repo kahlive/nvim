@@ -1,19 +1,35 @@
 local on_attach = require("utils.lsp").on_attach
-local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- Language Server Protocol (LSP)
-require("servers.lua_ls")(lspconfig, capabilities, on_attach)
-require("servers.pyright")(lspconfig, capabilities, on_attach)
-require("servers.gopls")(lspconfig, capabilities, on_attach)
-require("servers.jsonls")(lspconfig, capabilities, on_attach)
-require("servers.ts_ls")(lspconfig, capabilities, on_attach)
-require("servers.bashls")(lspconfig, capabilities, on_attach)
-require("servers.clangd")(lspconfig, capabilities, on_attach)
-require("servers.dockerls")(lspconfig, capabilities, on_attach)
-require("servers.yamlls")(lspconfig, capabilities, on_attach)
-require("servers.tailwindcss")(lspconfig, capabilities, on_attach)
-require("servers.rust_analyzer")(lspconfig, capabilities, on_attach)
+local server_builders = {
+	lua_ls = require("servers.lua_ls"),
+	pyright = require("servers.pyright"),
+	gopls = require("servers.gopls"),
+	jsonls = require("servers.jsonls"),
+	ts_ls = require("servers.ts_ls"),
+	bashls = require("servers.bashls"),
+	clangd = require("servers.clangd"),
+	dockerls = require("servers.dockerls"),
+	yamlls = require("servers.yamlls"),
+	tailwindcss = require("servers.tailwindcss"),
+	rust_analyzer = require("servers.rust_analyzer"),
+	efm = require("servers.efm-langserver"),
+}
 
--- Linters & Formatters
-require("servers.efm-langserver")(lspconfig, capabilities, on_attach)
+for name, build in pairs(server_builders) do
+	local ok, overrides = pcall(build, capabilities, on_attach)
+	if not ok then
+		vim.notify(
+			string.format("[lsp] Failed to configure %s: %s", name, overrides),
+			vim.log.levels.ERROR,
+			{ title = "LSP Setup" }
+		)
+	else
+		local config = vim.tbl_deep_extend("force", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		}, overrides or {})
+		vim.lsp.config(name, config)
+		vim.lsp.enable(name)
+	end
+end

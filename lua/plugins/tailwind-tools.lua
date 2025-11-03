@@ -13,5 +13,9 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"neovim/nvim-lspconfig",
 	},
-	opts = {},
+	opts = {
+		server = {
+			override = false,
+		},
+	},
 }
