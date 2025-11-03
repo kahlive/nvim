@@ -13,7 +13,12 @@
 return function(lspconfig, capabilities, on_attach)
 	local luacheck = require("efmls-configs.linters.luacheck") -- lua linter
 	local stylua = require("efmls-configs.formatters.stylua") -- lua formatter
-	local flake8 = require("efmls-configs.linters.flake8") -- python linter
+	-- local flake8 = require("efmls-configs.linters.flake8") -- python linter
+	local flake8 = {
+		lintCommand = "flake8 --ignore=E701,E704,W503,C901 --max-line-length=100 --stdin-display-name ${INPUT} -",
+		lintStdin = true,
+		lintFormats = { "%f:%l:%c: %m" },
+	}
 	local black = require("efmls-configs.formatters.black") -- python formatter
 	local go_revive = require("efmls-configs.linters.go_revive") -- go linter
 	local gofumpt = require("efmls-configs.formatters.gofumpt") -- go formatter

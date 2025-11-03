@@ -27,6 +27,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("config.globals")
+require("config.theme")
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
