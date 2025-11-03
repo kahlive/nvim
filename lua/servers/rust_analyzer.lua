@@ -1,17 +1,12 @@
 -- ================================================================================================
--- TITLE : tailwindcss LSP Setup
+-- TITLE : rust_analyzer LSP Setup
 -- LINKS :
---   > github: https://github.com/tailwindlabs/tailwindcss-intellisense
+--   > github: https://github.com/rust-lang/rust-analyzer
 -- ================================================================================================
 
---- @param lspconfig table The lspconfig module from nvim-lspconfig plugin
---- @param capabilities table LSP client capabilities (typically from nvim-cmp or similar)
---- @param on_attach function Callback function executed when LSP attaches to a buffer
---- @return nil
-return function(lspconfig, capabilities, on_attach)
-	lspconfig.rust_analyzer.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
+--- @return table server configuration overrides
+return function()
+	return {
 		settings = {
 			["rust-analyzer"] = {
 				check = {
@@ -94,5 +89,5 @@ return function(lspconfig, capabilities, on_attach)
 				},
 			},
 		},
-	})
+	}
 end
