@@ -15,11 +15,14 @@ return function(lspconfig, capabilities, on_attach)
 		settings = {
 			pyright = {
 				disableOrganizeImports = false,
+			},
+			python = {
 				analysis = {
-					useLibraryCodeForTypes = true,
-					autoSearchPaths = true,
+					typeCheckingMode = "standard",
 					diagnosticMode = "workspace",
+					autoSearchPaths = true,
 					autoImportCompletions = true,
+					useLibraryCodeForTypes = true,
 				},
 			},
 		},

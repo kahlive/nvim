@@ -54,7 +54,7 @@ vim.opt.swapfile = false -- Don't create swap files
 vim.opt.undofile = true -- Persistent undo
 vim.opt.updatetime = 100 -- Time in ms to trigger CursorHold
 vim.opt.timeoutlen = 1000 -- Time in ms to wait for mapped sequence
-vim.opt.ttimeoutlen = 0 -- No wait for key code sequences
+vim.opt.ttimeoutlen = 50 -- No wait for key code sequences
 vim.opt.autoread = true -- Auto-reload file if changed outside
 vim.opt.autowrite = false -- Don't auto-save on some events
 vim.opt.diffopt:append("vertical") -- Vertical diff splits
@@ -109,3 +109,4 @@ vim.opt.splitright = true -- Vertical splits open to the right
 
 vim.g.netrw_banner = 0
 vim.g.netrw_mouse = 2
+vim.g.python3_host_prog = os.getenv("HOME") .. "/.venvs/nvim/bin/python"
