@@ -195,10 +195,10 @@ function M.setup(opts)
   H("@tag",              { fg = P.blue })
 
   -- ★ FastAPI 等のデコレータを明るく（@ と decorator 名）
-  H("@punctuation.special", { fg = P.light })            -- 「@」
-  H("@attribute",           { fg = P.light, italic = true })  -- decorator 名
-  H("@function.macro",      { fg = P.light, italic = true })  -- 実装により decorator がここに来る
-  pcall(function() H("@decorator", { fg = P.light, italic = true }) end) -- 互換用
+  H("@punctuation.special", { fg = P.ocean })            -- 「@」
+  H("@attribute",           { fg = P.ocean, italic = true })  -- decorator 名
+  H("@function.macro",      { fg = P.ocean, italic = true })  -- 実装により decorator がここに来る
+  pcall(function() H("@decorator", { fg = P.ocean, italic = true }) end) -- 互換用
 
   -- 任意：通常のメソッド呼び出しも少し明るくしたいなら
   H("@method",       { fg = P.light_cool })
