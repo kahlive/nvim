@@ -1,6 +1,12 @@
 local M = {}
 
 M.on_attach = function(client, bufnr)
+	-- Let prettier (via efm) own JS/TS formatting; silence tsserver's formatter
+	if client.name == "ts_ls" then
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
+	end
+
 	local keymap = vim.keymap.set
 	local opts = {
 		noremap = true, -- prevent recursive mapping

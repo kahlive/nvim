@@ -40,5 +40,8 @@ return {
 				},
 			},
 		})
+
+		-- No mdx parser exists upstream; reuse the markdown parser for .mdx buffers
+		vim.treesitter.language.register("markdown", "mdx")
 	end,
 }

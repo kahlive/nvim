@@ -14,7 +14,7 @@ return function()
 			python = {
 				analysis = {
 					typeCheckingMode = "standard",
-					diagnosticMode = "workspace",
+					diagnosticMode = "openFiles",
 					autoSearchPaths = true,
 					autoImportCompletions = true,
 					useLibraryCodeForTypes = true,
