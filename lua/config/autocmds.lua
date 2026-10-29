@@ -29,6 +29,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Force .env files to 'conf' filetype to avoid shell LSPs attaching
+vim.filetype.add({
+	filename = {
+		[".env"] = "conf",
+	},
+	pattern = {
+		["%.env%.[%w_.-]+"] = "conf",
+	},
+})
+
+-- Neovim has no built-in .mdx detection; mdx_analyzer attaches on the "mdx" filetype
+vim.filetype.add({
+	extension = {
+		mdx = "mdx",
+	},
+})
+
 -- format on save using efm langserver and configured formatters
 -- local lsp_fmt_group = vim.api.nvim_create_augroup("FormatOnSaveGroup", {})
 -- vim.api.nvim_create_autocmd("BufWritePre", {

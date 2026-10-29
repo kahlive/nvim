@@ -13,6 +13,7 @@ local server_builders = {
 	yamlls = require("servers.yamlls"),
 	tailwindcss = require("servers.tailwindcss"),
 	rust_analyzer = require("servers.rust_analyzer"),
+	mdx_analyzer = require("servers.mdx_analyzer"),
 	efm = require("servers.efm-langserver"),
 }
 
