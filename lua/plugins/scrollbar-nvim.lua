@@ -9,23 +9,24 @@ local new_colors = {
 }
 return {
 	"petertriho/nvim-scrollbar",
+	-- TODO: 2026-11-16 に v2 が main へマージされたら branch 指定を削除する
+	branch = "refactor/v2",
 	event = "VeryLazy",
 	config = function()
 		require("scrollbar").setup({
 			marks = {
-				Search = { color = new_colors.green },
-				Error = { color = new_colors.red },
-				Warn = { color = new_colors.yellow },
-				Info = { color = new_colors.blue },
-				Hint = { color = new_colors.violet },
-				Misc = { color = new_colors.blue },
+				Search = { highlight = { fg = new_colors.green } },
+				Error = { highlight = { fg = new_colors.red } },
+				Warn = { highlight = { fg = new_colors.yellow } },
+				Info = { highlight = { fg = new_colors.blue } },
+				Hint = { highlight = { fg = new_colors.violet } },
+				Misc = { highlight = { fg = new_colors.blue } },
 			},
-			handlers = {
+			providers = {
 				cursor = true,
 				diagnostic = true,
 				gitsigns = true, -- Requires gitsigns
-				handle = true,
-				search = true, -- Requires hlslens
+				search = true,
 				ale = false, -- Requires ALE
 			},
 		})

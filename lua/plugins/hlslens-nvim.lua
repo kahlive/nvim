@@ -4,7 +4,6 @@ return {
 	event = "VeryLazy",
 	config = function()
 		require("hlslens").setup()
-		require("scrollbar.handlers.search").setup()
 
 		vim.api.nvim_set_keymap(
 			"n",

@@ -47,5 +47,5 @@ require("lazy").setup({
 		},
 	},
 	install = { colorscheme = { "melange" } },
-	checker = { enabled = true },
+	checker = { enabled = true, notify = false },
 })
