@@ -36,7 +36,7 @@ M.on_attach = function(client, bufnr)
 	end, vim.tbl_extend("force", opts, { desc = "LSP: Format buffer" }))
 
 	-- Order Imports (if supported by the client LSP)
-	if client.supports_method("textDocument/codeAction") then
+	if client:supports_method("textDocument/codeAction") then
 		keymap("n", "<leader>oi", function()
 			vim.lsp.buf.code_action({
 				context = {
