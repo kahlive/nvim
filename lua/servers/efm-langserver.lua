@@ -124,6 +124,13 @@ rel=${f#"$root"/}
 			"typescriptreact",
 			"vue",
 		},
+		-- Biome owns the buffers it attaches to: keep prettierd, oxlint and fixjson off them.
+		-- on_dir() without a root falls back to the default root_markers
+		root_dir = function(bufnr, on_dir)
+			if not require("utils.lsp").biome_attaches(bufnr) then
+				on_dir()
+			end
+		end,
 		init_options = {
 			documentFormatting = true,
 			documentRangeFormatting = true,

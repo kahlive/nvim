@@ -1,7 +1,32 @@
 local M = {}
 
+--- Whether the biome server attaches to the buffer, decided by its own filetypes and root_dir
+--- (servers/biome.lua and nvim-lspconfig). Where it does, Biome owns formatting and linting.
+--- @param bufnr integer
+--- @return boolean
+function M.biome_attaches(bufnr)
+	local biome = vim.lsp.config.biome
+	if not vim.list_contains(biome.filetypes or {}, vim.bo[bufnr].filetype) then
+		return false
+	end
+	local root_dir = biome.root_dir
+	assert(type(root_dir) == "function", "[lsp] biome's root_dir is expected to be nvim-lspconfig's function")
+	-- it calls on_dir synchronously, and only for buffers under a Biome config
+	local attaches = false
+	root_dir(bufnr, function()
+		attaches = true
+	end)
+	return attaches
+end
+
+--- Formats with Biome alone where it owns the buffer, elsewhere with every attached formatter.
+--- @param bufnr integer
+local function format(bufnr)
+	vim.lsp.buf.format({ bufnr = bufnr, async = false, name = M.biome_attaches(bufnr) and "biome" or nil })
+end
+
 M.on_attach = function(client, bufnr)
-	-- Let prettier (via efm) own JS/TS formatting; silence tsserver's formatter
+	-- Let prettier (via efm) or Biome own JS/TS formatting; silence tsserver's formatter
 	if client.name == "ts_ls" then
 		client.server_capabilities.documentFormattingProvider = false
 		client.server_capabilities.documentRangeFormattingProvider = false
@@ -32,7 +57,7 @@ M.on_attach = function(client, bufnr)
 	-- Format buffer
 	keymap("n", "<leader>z", function()
 		-- prefer synchronous formatting for immediate feedback
-		vim.lsp.buf.format({ async = false })
+		format(bufnr)
 	end, vim.tbl_extend("force", opts, { desc = "LSP: Format buffer" }))
 
 	-- Order Imports (if supported by the client LSP)
@@ -40,15 +65,18 @@ M.on_attach = function(client, bufnr)
 		keymap("n", "<leader>oi", function()
 			vim.lsp.buf.code_action({
 				context = {
-					only = { "source.organizeImports" },
+					-- in Biome's buffers ts_ls offers its own order too; take Biome's alone
+					only = { M.biome_attaches(bufnr) and "source.organizeImports.biome" or "source.organizeImports" },
 					diagnostics = {},
 				},
+				-- first line to last: Biome offers it only for a range that touches the imports
+				range = { start = { 1, 0 }, ["end"] = { vim.api.nvim_buf_line_count(bufnr), 0 } },
 				apply = true,
 				bufnr = bufnr,
 			})
 			-- format after changing import order
 			vim.defer_fn(function()
-				vim.lsp.buf.format({ bufnr = bufnr })
+				format(bufnr)
 			end, 50) -- slight delay to allow for the import order to go first
 		end, opts)
 	end

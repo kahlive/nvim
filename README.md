@@ -95,8 +95,8 @@
   - 診断アイコン: `lua/utils/diagnostics.lua` + `lua/utils/icons.lua`
   - バッファローカル LSP キーマップ（`utils/lsp.lua`）
     - 例: `gd` 定義, `K` ホバー, `gr` 参照, `gl` 浮動診断
-    - `\<leader>z`: `vim.lsp.buf.format()` で同期フォーマット
-    - `\<leader>oi`: organize imports（対応サーバのみ）→フォーマット自動実行
+    - `\<leader>z`: `vim.lsp.buf.format()` で同期フォーマット（`biome` が付いたバッファは Biome だけ）
+    - `\<leader>oi`: organize imports（対応サーバのみ。`biome` が付いたバッファは Biome の並び）→フォーマット自動実行
 
 - 有効化サーバ（`lua/servers/*.lua`）
   - `lua_ls`: `vim` をグローバルとして許可、設定ディレクトリを workspace library に追加
@@ -110,6 +110,7 @@
   - `yamlls`: SchemaStore のスキーマ例（docker-compose 等）/ 検証と整形有効
   - `tailwindcss`: JS/TS/Vue/Svelte でのクラス補完
   - `rust_analyzer`: clippy, allFeatures、有用な inlay hints を選択的に有効/無効
+  - `biome`: `biome.json`/`biome.jsonc` があるプロジェクトの JS/TS/JSON/CSS/GraphQL。付いたバッファの整形と lint は Biome だけが持つ
 
 
 ## Lint/Format（`efm-langserver`）
@@ -124,6 +125,8 @@
 - Shell: `shellcheck`, `shfmt`
 - Docker: `hadolint`
 - C/C++: `cpplint`, `clang-format`
+
+`biome` が付くバッファには efm を付けません（`lua/servers/efm-langserver.lua` の `root_dir`）。
 
 保存時フォーマットはサンプルの自動コマンドをコメントアウト済み（`autocmds.lua`）。必要ならコメントを外してください。
 

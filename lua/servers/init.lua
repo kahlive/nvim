@@ -14,6 +14,7 @@ local server_builders = {
 	tailwindcss = require("servers.tailwindcss"),
 	rust_analyzer = require("servers.rust_analyzer"),
 	mdx_analyzer = require("servers.mdx_analyzer"),
+	biome = require("servers.biome"),
 	efm = require("servers.efm-langserver"),
 }
 
